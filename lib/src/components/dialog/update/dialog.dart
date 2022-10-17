@@ -67,10 +67,7 @@ class DxUpdateDialog {
           },
           transitionDuration: const Duration(milliseconds: 300),
           pageBuilder: (_, __, ___) {
-            return WillPopScope(
-              onWillPop: () => Future<bool>.value(false),
-              child: _widget,
-            );
+            return WillPopScope(onWillPop: () => Future<bool>.value(false), child: _widget);
           });
       _isShowing = true;
       return Future<bool>.value(true);
@@ -129,25 +126,27 @@ class DxUpdateDialog {
     String? ignoreButtonText,
     bool isForce = false,
   }) {
-    final DxUpdateDialog dialog = DxUpdateDialog(context,
-        width: width,
-        title: title,
-        updateContent: updateContent,
-        onUpdate: onUpdate,
-        titleTextSize: titleTextSize,
-        contentTextSize: contentTextSize,
-        buttonTextSize: buttonTextSize,
-        progress: progress,
-        topImage: topImage,
-        extraHeight: extraHeight,
-        radius: radius,
-        themeColor: themeColor,
-        progressBackgroundColor: progressBackgroundColor,
-        enableIgnore: enableIgnore,
-        isForce: isForce,
-        updateButtonText: updateButtonText,
-        ignoreButtonText: ignoreButtonText,
-        onIgnore: onIgnore);
+    final DxUpdateDialog dialog = DxUpdateDialog(
+      context,
+      width: width,
+      title: title,
+      updateContent: updateContent,
+      onUpdate: onUpdate,
+      titleTextSize: titleTextSize,
+      contentTextSize: contentTextSize,
+      buttonTextSize: buttonTextSize,
+      progress: progress,
+      topImage: topImage,
+      extraHeight: extraHeight,
+      radius: radius,
+      themeColor: themeColor,
+      progressBackgroundColor: progressBackgroundColor,
+      enableIgnore: enableIgnore,
+      isForce: isForce,
+      updateButtonText: updateButtonText,
+      ignoreButtonText: ignoreButtonText,
+      onIgnore: onIgnore,
+    );
     dialog.show();
     return dialog;
   }
@@ -254,7 +253,7 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final double dialogWidth = MediaQuery.of(context).size.width * 0.86;
+    final double dialogWidth = MediaQuery.of(context).size.width * 0.8;
     return Material(
         type: MaterialType.transparency,
         child: SizedBox(
@@ -306,6 +305,7 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                                 height: 42,
                                 gradient: DxStyle.$GRADIENT$4A92E3$4078F4,
                                 title: widget.updateButtonText,
+                                onClick: widget.onUpdate,
                               )
                             : DxNumberProgress(
                                 value: widget.progress,
@@ -328,35 +328,5 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
             ],
           ),
         ));
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: dialogWidth,
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 170, bottom: 30),
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            image: const DecorationImage(
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.topCenter,
-              image: AssetImage(DxAsset.updateBg, package: 'dxwidget'),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(widget.radius)),
-            ),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.only(top: widget.extraHeight),
-          alignment: Alignment.center,
-          child: Text(
-            widget.title,
-            style: TextStyle(fontSize: widget.titleTextSize, color: DxStyle.$404040),
-          ),
-        ),
-      ],
-    );
   }
 }
