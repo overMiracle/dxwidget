@@ -51,15 +51,11 @@ class DxUpdateDialog {
         return Future<bool>.value(false);
       }
       showGeneralDialog<bool>(
-          context: _context,
-          barrierDismissible: false,
-          transitionBuilder: (_, a1, a2, child) {
-            return Transform.scale(scale: a1.value, child: child);
-          },
-          transitionDuration: const Duration(milliseconds: 200),
-          pageBuilder: (_, __, ___) {
-            return WillPopScope(onWillPop: () => Future<bool>.value(false), child: _widget);
-          });
+        context: _context,
+        barrierDismissible: false,
+        transitionBuilder: (_, a1, a2, child) => Transform.scale(scale: a1.value, child: child),
+        pageBuilder: (_, __, ___) => WillPopScope(onWillPop: () => Future<bool>.value(false), child: _widget),
+      );
       _isShowing = true;
       return Future<bool>.value(true);
     } catch (err) {
@@ -84,9 +80,7 @@ class DxUpdateDialog {
   }
 
   /// 是否显示
-  bool isShowing() {
-    return _isShowing;
-  }
+  bool isShowing() => _isShowing;
 
   /// 更新进度
   void update(double progress) {
@@ -292,14 +286,15 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                   ),
                 ),
                 Positioned(
-                  top: 15,
-                  right: 15,
-                  width: 15,
-                  height: 15,
+                  top: 0,
+                  right: 0,
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => widget.onClose?.call(),
-                    child: Image.asset(DxAsset.updateClose, package: 'dxwidget'),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 15, 15, 20),
+                      child: Image.asset(DxAsset.updateClose, width: 15, height: 15, package: 'dxwidget'),
+                    ),
                   ),
                 ),
               ],
