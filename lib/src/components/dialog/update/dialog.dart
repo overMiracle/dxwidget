@@ -10,47 +10,38 @@ class DxUpdateDialog {
 
   DxUpdateDialog(
     BuildContext context, {
-    double width = 0.0,
     required String title,
     required String updateContent,
-    required VoidCallback onUpdate,
     double titleTextSize = 16.0,
     double contentTextSize = 14.0,
     double buttonTextSize = 14.0,
     double progress = -1.0,
-    Color progressBackgroundColor = const Color(0xFFFFCDD2),
     Image? topImage,
     double extraHeight = 5.0,
-    double radius = 4.0,
-    Color themeColor = Colors.red,
-    bool enableIgnore = false,
-    VoidCallback? onIgnore,
+    double radius = 8.0,
+    Color progressColor = const Color(0xFF4078F4),
     bool isForce = false,
     String? updateButtonText,
     String? ignoreButtonText,
     VoidCallback? onClose,
+    required VoidCallback onUpdate,
   }) {
     _context = context;
     _widget = DxUpdateWidget(
-        width: width,
-        title: title,
-        updateContent: updateContent,
-        onUpdate: onUpdate,
-        titleTextSize: titleTextSize,
-        contentTextSize: contentTextSize,
-        buttonTextSize: buttonTextSize,
-        progress: progress,
-        topImage: topImage,
-        extraHeight: extraHeight,
-        radius: radius,
-        themeColor: themeColor,
-        progressBackgroundColor: progressBackgroundColor,
-        enableIgnore: enableIgnore,
-        onIgnore: onIgnore,
-        isForce: isForce,
-        updateButtonText: updateButtonText ?? '更新',
-        ignoreButtonText: ignoreButtonText ?? '忽略此版本',
-        onClose: onClose ?? () => dismiss());
+      title: title,
+      updateContent: updateContent,
+      onUpdate: onUpdate,
+      titleTextSize: titleTextSize,
+      contentTextSize: contentTextSize,
+      buttonTextSize: buttonTextSize,
+      progress: progress,
+      topImage: topImage,
+      extraHeight: extraHeight,
+      radius: radius,
+      progressColor: progressColor,
+      updateButtonText: updateButtonText ?? '更新',
+      onClose: onClose ?? () => dismiss(),
+    );
   }
 
   /// 显示弹窗
@@ -115,20 +106,18 @@ class DxUpdateDialog {
     double contentTextSize = 14.0,
     double buttonTextSize = 14.0,
     double progress = -1.0,
-    Color progressBackgroundColor = const Color(0xFFFFCDD2),
+    Color progressColor = const Color(0xFF4078F4),
     Image? topImage,
     double extraHeight = 5.0,
-    double radius = 4.0,
-    Color themeColor = Colors.red,
+    double radius = 8.0,
     bool enableIgnore = false,
-    VoidCallback? onIgnore,
+    VoidCallback? onClose,
     String? updateButtonText,
     String? ignoreButtonText,
     bool isForce = false,
   }) {
     final DxUpdateDialog dialog = DxUpdateDialog(
       context,
-      width: width,
       title: title,
       updateContent: updateContent,
       onUpdate: onUpdate,
@@ -139,13 +128,10 @@ class DxUpdateDialog {
       topImage: topImage,
       extraHeight: extraHeight,
       radius: radius,
-      themeColor: themeColor,
-      progressBackgroundColor: progressBackgroundColor,
-      enableIgnore: enableIgnore,
-      isForce: isForce,
+      progressColor: progressColor,
       updateButtonText: updateButtonText,
       ignoreButtonText: ignoreButtonText,
-      onIgnore: onIgnore,
+      onClose: onClose,
     );
     dialog.show();
     return dialog;
@@ -181,9 +167,6 @@ class DxUpdateWidget extends StatefulWidget {
   /// 边框圆角大小
   final double radius;
 
-  /// 主题颜色
-  final Color themeColor;
-
   /// 更新事件
   final VoidCallback onUpdate;
 
@@ -195,8 +178,8 @@ class DxUpdateWidget extends StatefulWidget {
 
   double progress;
 
-  /// 进度条的背景颜色
-  final Color progressBackgroundColor;
+  /// 进度条的颜色
+  final Color progressColor;
 
   /// 更新事件
   final VoidCallback? onClose;
@@ -220,11 +203,10 @@ class DxUpdateWidget extends StatefulWidget {
     this.contentTextSize = 14.0,
     this.buttonTextSize = 14.0,
     this.progress = -1.0,
-    this.progressBackgroundColor = const Color(0xFFFFCDD2),
+    this.progressColor = const Color(0xFF4078F4),
     this.topImage,
     this.extraHeight = 5.0,
     this.radius = 4.0,
-    this.themeColor = Colors.red,
     this.enableIgnore = false,
     this.onIgnore,
     this.isForce = false,
@@ -255,80 +237,88 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
   Widget build(BuildContext context) {
     final double dialogWidth = MediaQuery.of(context).size.width * 0.8;
     return Material(
-        type: MaterialType.transparency,
-        child: SizedBox(
-          width: dialogWidth,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Stack(
-                children: [
-                  Container(
-                    width: dialogWidth,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(left: 15, right: 15, top: 170, bottom: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: const DecorationImage(
-                        alignment: Alignment.topCenter,
-                        image: AssetImage(DxAsset.updateBg, package: 'dxwidget'),
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(widget.radius)),
+      type: MaterialType.transparency,
+      child: SizedBox(
+        width: dialogWidth,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Stack(
+              children: [
+                Container(
+                  width: dialogWidth,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 170, bottom: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    image: const DecorationImage(
+                      alignment: Alignment.topCenter,
+                      image: AssetImage(DxAsset.updateBg, package: 'dxwidget'),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: widget.extraHeight),
-                          alignment: Alignment.center,
-                          child:
-                              Text(widget.title, style: TextStyle(fontSize: widget.titleTextSize, color: Colors.black)),
-                        ),
-                        Container(
-                          constraints: const BoxConstraints(maxHeight: 160),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: ScrollConfiguration(
-                            behavior: DxNoScrollBehavior(),
-                            child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Text(
-                                widget.updateContent,
-                                style: TextStyle(fontSize: widget.contentTextSize, color: const Color(0xFF666666)),
-                              ),
+                    borderRadius: BorderRadius.all(Radius.circular(widget.radius)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: widget.extraHeight),
+                        alignment: Alignment.center,
+                        child:
+                            Text(widget.title, style: TextStyle(fontSize: widget.titleTextSize, color: Colors.black)),
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(maxHeight: 160),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: ScrollConfiguration(
+                          behavior: DxNoScrollBehavior(),
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Text(
+                              widget.updateContent,
+                              style: TextStyle(fontSize: widget.contentTextSize, color: const Color(0xFF666666)),
                             ),
                           ),
                         ),
-                        widget.progress < 0
-                            ? DxButton(
-                                block: true,
-                                height: 42,
-                                gradient: DxStyle.$GRADIENT$4A92E3$4078F4,
-                                title: widget.updateButtonText,
-                                onClick: widget.onUpdate,
-                              )
-                            : DxNumberProgress(
-                                value: widget.progress,
-                                backgroundColor: widget.progressBackgroundColor,
-                                valueColor: widget.themeColor,
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                              )
-                      ],
-                    ),
+                      ),
+                      AnimatedCrossFade(
+                          firstChild: firstChild,
+                          secondChild: secondChild,
+                          crossFadeState: crossFadeState,
+                          duration: duration),
+                      widget.progress < 0
+                          ? DxButton(
+                              block: true,
+                              height: 46,
+                              gradient: DxStyle.$GRADIENT$4A92E3$4078F4,
+                              title: widget.updateButtonText,
+                              onClick: widget.onUpdate,
+                            )
+                          : DxNumberProgress(
+                              value: widget.progress,
+                              backgroundColor: widget.progressColor.withOpacity(0.3),
+                              valueColor: widget.progressColor,
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            )
+                    ],
                   ),
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    width: 15,
-                    child: GestureDetector(
-                      onTap: () => widget.onClose?.call(),
-                      child: Image.asset(DxAsset.updateClose, package: 'dxwidget', width: 30, height: 30),
-                    ),
+                ),
+                Positioned(
+                  top: 15,
+                  right: 15,
+                  width: 15,
+                  height: 15,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => widget.onClose?.call(),
+                    child: Image.asset(DxAsset.updateClose, package: 'dxwidget'),
                   ),
-                ],
-              )
-            ],
-          ),
-        ));
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
