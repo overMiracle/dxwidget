@@ -90,6 +90,7 @@ class DxUpdateDialog {
 
   /// 更新进度
   void update(double progress) {
+    print('DxUpdateDialog中的update被调用');
     if (isShowing()) {
       _widget.update(progress);
     }
@@ -170,12 +171,6 @@ class DxUpdateWidget extends StatefulWidget {
   /// 更新事件
   final VoidCallback onUpdate;
 
-  /// 可忽略更新
-  final bool enableIgnore;
-
-  /// 更新事件
-  final VoidCallback? onIgnore;
-
   double progress;
 
   /// 进度条的颜色
@@ -206,9 +201,7 @@ class DxUpdateWidget extends StatefulWidget {
     this.progressColor = const Color(0xFF4078F4),
     this.topImage,
     this.extraHeight = 5.0,
-    this.radius = 4.0,
-    this.enableIgnore = false,
-    this.onIgnore,
+    this.radius = 8.0,
     this.isForce = false,
     this.updateButtonText = '更新',
     this.ignoreButtonText = '忽略此版本',
@@ -217,7 +210,10 @@ class DxUpdateWidget extends StatefulWidget {
 
   final _DxUpdateWidgetState _state = _DxUpdateWidgetState();
 
-  void update(double progress) => _state.update(progress);
+  void update(double progress) {
+    print('DxUpdateWidget中的update被调用');
+    _state.update(progress);
+  }
 
   @override
   State<DxUpdateWidget> createState() => _DxUpdateWidgetState();
@@ -225,6 +221,7 @@ class DxUpdateWidget extends StatefulWidget {
 
 class _DxUpdateWidgetState extends State<DxUpdateWidget> {
   void update(double progress) {
+    print('_DxUpdateWidgetState中的update被调用');
     if (!mounted) {
       return;
     }
@@ -235,6 +232,7 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('buildbuildbuildbuildbuildbuildbuildbuild被调用');
     final double dialogWidth = MediaQuery.of(context).size.width * 0.8;
     return Material(
       type: MaterialType.transparency,
