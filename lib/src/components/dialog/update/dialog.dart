@@ -56,7 +56,7 @@ class DxUpdateDialog {
           transitionBuilder: (_, a1, a2, child) {
             return Transform.scale(scale: a1.value, child: child);
           },
-          transitionDuration: const Duration(milliseconds: 300),
+          transitionDuration: const Duration(milliseconds: 200),
           pageBuilder: (_, __, ___) {
             return WillPopScope(onWillPop: () => Future<bool>.value(false), child: _widget);
           });
@@ -270,21 +270,24 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                           ),
                         ),
                       ),
-                      widget.progress < 0
-                          ? DxButton(
-                              block: true,
-                              height: 46,
-                              gradient: DxStyle.$GRADIENT$4A92E3$4078F4,
-                              title: widget.updateButtonText,
-                              onClick: widget.onUpdate,
-                            )
-                          : DxNumberProgress(
-                              height: 12,
-                              value: widget.progress,
-                              backgroundColor: widget.progressColor.withOpacity(0.3),
-                              valueColor: widget.progressColor,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                            )
+                      AnimatedCrossFade(
+                        firstChild: DxButton(
+                          block: true,
+                          height: 46,
+                          gradient: DxStyle.$GRADIENT$4A92E3$4078F4,
+                          title: widget.updateButtonText,
+                          onClick: widget.onUpdate,
+                        ),
+                        secondChild: DxNumberProgress(
+                          height: 12,
+                          value: widget.progress,
+                          backgroundColor: widget.progressColor.withOpacity(0.3),
+                          valueColor: widget.progressColor,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        ),
+                        crossFadeState: widget.progress < 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                        duration: const Duration(milliseconds: 200),
+                      ),
                     ],
                   ),
                 ),

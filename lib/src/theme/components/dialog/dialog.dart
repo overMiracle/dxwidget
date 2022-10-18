@@ -92,7 +92,7 @@ class DxDialogThemeData {
       smallScreenWidthFactor: smallScreenWidthFactor ?? .9,
       fontSize: $fontSize,
       transition: transition ?? DxStyle.animationDurationBase,
-      borderRadius: borderRadius ?? 16.0,
+      borderRadius: borderRadius ?? 12.0,
       backgroundColor: backgroundColor ?? DxStyle.white,
       headerFontWeight: headerFontWeight ?? DxStyle.fontWeightBold,
       headerLineHeight: headerLineHeight ?? (24.0 / $fontSize),

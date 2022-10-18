@@ -63,7 +63,7 @@ class DxPopupThemeData {
   }) {
     return DxPopupThemeData.raw(
       backgroundColor: backgroundColor ?? DxStyle.white,
-      transitionDuration: transitionDuration ?? DxStyle.animationDurationBase,
+      transitionDuration: transitionDuration ?? DxStyle.animationDuration200,
       roundBorderRadius: roundBorderRadius ?? 16.0,
       closeIconSize: closeIconSize ?? 22.0,
       closeIconColor: closeIconColor ?? DxStyle.gray5,

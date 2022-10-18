@@ -364,7 +364,7 @@ DxTransitionBuilder _getPopupTransition(DxPopupPosition position) {
     case DxPopupPosition.left:
       return DxPopupTransition.slideToRight;
     default:
-      return DxPopupTransition.fade;
+      return DxPopupTransition.scale;
   }
 }
 
@@ -432,5 +432,13 @@ class DxPopupTransition {
     Widget child,
   ) {
     return FadeTransition(opacity: animation, child: child);
+  }
+
+  static Widget scale(
+    BuildContext context,
+    Animation<double> animation,
+    Widget child,
+  ) {
+    return Transform.scale(scale: animation.value, child: child);
   }
 }

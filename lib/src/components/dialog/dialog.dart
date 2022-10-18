@@ -11,8 +11,8 @@ class DxDialogOption {
   const DxDialogOption({
     this.title = '',
     this.width,
-    this.message = '',
-    this.messageAlign = TextAlign.center,
+    this.content = '',
+    this.contentAlign = TextAlign.center,
     this.theme = DxDialogThemeType.normal,
     this.showConfirmButton = true,
     this.showCancelButton = false,
@@ -28,8 +28,8 @@ class DxDialogOption {
 
   final String title;
   final double? width;
-  final String message;
-  final TextAlign messageAlign;
+  final String content;
+  final TextAlign contentAlign;
   final DxDialogThemeType theme;
   final bool showConfirmButton;
   final bool showCancelButton;
@@ -49,8 +49,8 @@ class DxDialogOption {
     return copyWith(
       title: other.title,
       width: other.width,
-      message: message,
-      messageAlign: messageAlign,
+      content: content,
+      contentAlign: contentAlign,
       theme: theme,
       showConfirmButton: showConfirmButton,
       showCancelButton: showCancelButton,
@@ -68,8 +68,8 @@ class DxDialogOption {
   DxDialogOption copyWith({
     String? title,
     double? width,
-    String? message,
-    TextAlign? messageAlign,
+    String? content,
+    TextAlign? contentAlign,
     DxDialogThemeType? theme,
     bool? showConfirmButton,
     bool? showCancelButton,
@@ -85,8 +85,8 @@ class DxDialogOption {
     return DxDialogOption(
       title: title ?? this.title,
       width: width ?? this.width,
-      message: message ?? this.message,
-      messageAlign: messageAlign ?? this.messageAlign,
+      content: content ?? this.content,
+      contentAlign: contentAlign ?? this.contentAlign,
       theme: theme ?? this.theme,
       showConfirmButton: showConfirmButton ?? this.showConfirmButton,
       showCancelButton: showCancelButton ?? this.showCancelButton,
@@ -116,10 +116,10 @@ class DxDialog {
     double? width,
 
     /// 文本内容，支持通过 `\n` 换行
-    String? message,
+    String? content,
 
     /// 内容水平对齐方式，可选值为 `left` `right` `center`
-    TextAlign? messageAlign,
+    TextAlign? contentAlign,
 
     /// 式风格，可选值为 `roundButton` `normal`
     DxDialogThemeType? theme,
@@ -190,8 +190,8 @@ class DxDialog {
         return DxDialogWidget(
           title: title ?? defaultOptions.title,
           width: width ?? defaultOptions.width,
-          message: message ?? defaultOptions.message,
-          messageAlign: messageAlign ?? defaultOptions.messageAlign,
+          content: content ?? defaultOptions.content,
+          contentAlign: contentAlign ?? defaultOptions.contentAlign,
           theme: theme ?? defaultOptions.theme,
           showConfirmButton: showConfirmButton ?? defaultOptions.showConfirmButton,
           showCancelButton: showCancelButton ?? defaultOptions.showCancelButton,
@@ -233,10 +233,10 @@ class DxDialog {
     double? width,
 
     /// 文本内容，支持通过 `\n` 换行
-    String? message,
+    String? content,
 
     /// 内容水平对齐方式，可选值为 `left` `right` `center`
-    TextAlign? messageAlign,
+    TextAlign? contentAlign,
 
     /// 式风格，可选值为 `roundButton` `normal`
     DxDialogThemeType? theme,
@@ -302,8 +302,8 @@ class DxDialog {
       context,
       title: title,
       width: width,
-      message: message,
-      messageAlign: messageAlign,
+      content: content,
+      contentAlign: contentAlign,
       theme: theme,
       showConfirmButton: showConfirmButton,
       showCancelButton: showCancelButton ?? true,
@@ -361,8 +361,8 @@ class DxDialogWidget extends StatefulWidget {
     Key? key,
     this.title = '',
     this.width,
-    this.message = '',
-    this.messageAlign = TextAlign.left,
+    this.content = '',
+    this.contentAlign = TextAlign.left,
     this.theme = DxDialogThemeType.normal,
     this.showConfirmButton = true,
     this.showCancelButton = false,
@@ -385,10 +385,10 @@ class DxDialogWidget extends StatefulWidget {
   final double? width;
 
   /// 文本内容，支持通过 `\n` 换行
-  final String message;
+  final String content;
 
   /// 内容水平对齐方式，可选值为 `left` `right` `center`
-  final TextAlign messageAlign;
+  final TextAlign contentAlign;
 
   /// 式风格，可选值为 `roundButton` `normal`
   final DxDialogThemeType theme;
@@ -459,7 +459,7 @@ class _DxDialogWidgetState extends State<DxDialogWidget> {
   bool get hasTitle => widget.titleSlot != null || widget.title.isNotEmpty;
 
   Widget _buildTitle(DxDialogThemeData themeData) {
-    final bool isolated = widget.message.isEmpty && widget.child == null;
+    final bool isolated = widget.content.isEmpty && widget.child == null;
 
     return Visibility(
       visible: hasTitle,
@@ -486,25 +486,25 @@ class _DxDialogWidgetState extends State<DxDialogWidget> {
     final double winHeight = MediaQuery.of(context).size.height;
 
     return Visibility(
-      visible: widget.message.isNotEmpty,
+      visible: widget.content.isNotEmpty,
       child: Container(
         constraints: BoxConstraints(
           maxHeight: themeData.messageMaxHeight * winHeight,
         ),
         padding: EdgeInsets.only(
           top: 20.0,
-          bottom: isRoundTheme ? DxStyle.paddingMd : 26.0,
+          bottom: isRoundTheme ? DxStyle.paddingMd : 15.0,
           left: themeData.messagePadding,
           right: themeData.messagePadding,
         ),
         child: Text(
-          widget.message,
+          widget.content,
           style: TextStyle(
             fontSize: themeData.messageFontSize,
             height: themeData.messageLineHeight,
             color: hasTitle ? themeData.hasTitleMessageTextColor : null,
           ),
-          textAlign: widget.messageAlign,
+          textAlign: widget.contentAlign,
         ),
       ),
     );
