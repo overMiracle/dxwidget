@@ -90,7 +90,6 @@ class DxUpdateDialog {
 
   /// 更新进度
   void update(double progress) {
-    print('DxUpdateDialog中的update被调用');
     if (isShowing()) {
       _widget.update(progress);
     }
@@ -211,18 +210,15 @@ class DxUpdateWidget extends StatefulWidget {
   final _DxUpdateWidgetState _state = _DxUpdateWidgetState();
 
   void update(double progress) {
-    print('DxUpdateWidget中的update被调用');
     _state.update(progress);
   }
 
   @override
-  State<DxUpdateWidget> createState() => _DxUpdateWidgetState();
+  State<DxUpdateWidget> createState() => _state;
 }
 
 class _DxUpdateWidgetState extends State<DxUpdateWidget> {
   void update(double progress) {
-    print('_DxUpdateWidgetState中的update被调用');
-    print('mounted的值为：$mounted');
     if (mounted) {
       setState(() => widget.progress = progress);
     }
@@ -230,7 +226,6 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('buildbuildbuildbuildbuildbuildbuildbuild被调用');
     final double dialogWidth = MediaQuery.of(context).size.width * 0.8;
     return Material(
       type: MaterialType.transparency,
