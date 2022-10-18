@@ -281,11 +281,6 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                           ),
                         ),
                       ),
-                      AnimatedCrossFade(
-                          firstChild: firstChild,
-                          secondChild: secondChild,
-                          crossFadeState: crossFadeState,
-                          duration: duration),
                       widget.progress < 0
                           ? DxButton(
                               block: true,
