@@ -209,9 +209,7 @@ class DxUpdateWidget extends StatefulWidget {
 
   final _DxUpdateWidgetState _state = _DxUpdateWidgetState();
 
-  void update(double progress) {
-    _state.update(progress);
-  }
+  void update(double progress) => _state.update(progress);
 
   @override
   State<DxUpdateWidget> createState() => _state;

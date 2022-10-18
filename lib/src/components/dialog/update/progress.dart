@@ -28,12 +28,12 @@ class DxNumberProgress extends StatelessWidget {
 
   const DxNumberProgress({
     Key? key,
-    this.height = 10.0,
+    this.height = 12.0,
     this.value = 0.0,
     this.backgroundColor,
     this.valueColor = Colors.blue,
     this.textColor = Colors.white,
-    this.textSize = 8.0,
+    this.textSize = 9.0,
     this.padding = EdgeInsets.zero,
     this.textAlignment = Alignment.center,
   }) : super(key: key);
@@ -60,11 +60,8 @@ class DxNumberProgress extends StatelessWidget {
             height: height,
             alignment: textAlignment,
             child: Text(
-              value >= 1 ? '100%' : '${(value * 100).toInt()}%',
-              style: TextStyle(
-                color: textColor,
-                fontSize: textSize,
-              ),
+              value >= 1 ? '100%' : '${(value * 100).toStringAsFixed(2)}%',
+              style: TextStyle(color: textColor, fontSize: textSize),
             ),
           ),
         ],
