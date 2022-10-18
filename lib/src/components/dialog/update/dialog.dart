@@ -222,7 +222,10 @@ class DxUpdateWidget extends StatefulWidget {
 class _DxUpdateWidgetState extends State<DxUpdateWidget> {
   void update(double progress) {
     print('_DxUpdateWidgetState中的update被调用');
-    setState(() => widget.progress = progress);
+    print('mounted的值为：$mounted');
+    if (mounted) {
+      setState(() => widget.progress = progress);
+    }
   }
 
   @override
