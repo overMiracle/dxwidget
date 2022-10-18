@@ -222,9 +222,6 @@ class DxUpdateWidget extends StatefulWidget {
 class _DxUpdateWidgetState extends State<DxUpdateWidget> {
   void update(double progress) {
     print('_DxUpdateWidgetState中的update被调用');
-    if (!mounted) {
-      return;
-    }
     setState(() => widget.progress = progress);
   }
 
