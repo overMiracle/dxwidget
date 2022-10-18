@@ -319,7 +319,9 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                   Positioned(
                     top: 10,
                     right: 10,
+                    width: 15,
                     child: GestureDetector(
+                      onTap: () => widget.onClose?.call(),
                       child: Image.asset(DxAsset.updateClose, package: 'dxwidget', width: 30, height: 30),
                     ),
                   ),
