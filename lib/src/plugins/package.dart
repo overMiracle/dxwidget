@@ -5,19 +5,20 @@ import 'package:flutter/services.dart';
 /// Application metadata. Provides application bundle information on iOS and
 /// application package information on Android.
 class DxPackagePlugin {
+  DxPackagePlugin._();
   static const MethodChannel _channel = MethodChannel('com.dxwidget/channel');
 
-  static DxPackageItem? _packageInfo;
+  static DxPackageInfo? _packageInfo;
 
   /// Retrieves package information from the platform.
   /// The result is cached.
-  static Future<DxPackageItem> getAppVersion() async {
+  static Future<DxPackageInfo> getAppVersion() async {
     if (_packageInfo != null) {
       return _packageInfo!;
     }
 
     final resultMap = await _channel.invokeMethod('getAppVersion');
-    return DxPackageItem(
+    return DxPackageInfo(
       appName: resultMap['appName'],
       packageName: resultMap['packageName'],
       version: resultMap['version'],
@@ -26,7 +27,7 @@ class DxPackagePlugin {
   }
 }
 
-class DxPackageItem {
+class DxPackageInfo {
   /// The app name. `CFBundleDisplayName` on iOS, `application/label` on Android.
   final String appName;
 
@@ -42,13 +43,10 @@ class DxPackageItem {
   /// The installer store. Indicates through which store this application was installed.
   final String? installerStore;
 
-  /// Constructs an instance with the given values for testing. [DxPackageItem]
+  /// Constructs an instance with the given values for testing. [DxPackageInfo]
   /// instances constructed this way won't actually reflect any real information
   /// from the platform, just whatever was passed in at construction time.
-  ///
-  /// See [fromPlatform] for the right API to get a [DxPackageItem]
-  /// that's actually populated with real data.
-  DxPackageItem({
+  DxPackageInfo({
     required this.appName,
     required this.packageName,
     required this.version,
