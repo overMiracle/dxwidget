@@ -2,6 +2,7 @@ package com.dxwidget.android
 
 import android.content.Context
 import android.content.pm.PackageManager
+import com.dxwidget.android.plugins.Install
 import com.dxwidget.android.plugins.NetworkConnectivity
 import com.dxwidget.android.plugins.PackageInfo
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -37,6 +38,16 @@ class DxwidgetPlugin : MethodCallHandler, FlutterPlugin {
             when (call.method) {
                 "getAppVersion" -> result.success(PackageInfo().getAppVersion(applicationContext!!))
                 "isNetworkAvailable" -> result.success(NetworkConnectivity().isNetworkAvailable(applicationContext))
+                "installApk" -> {
+                    val filePath = call.argument<String>("filePath")
+                    val appId = call.argument<String>("appId")
+                    try {
+                        Install().installApk(filePath, appId)
+                        result.success("Success")
+                    } catch (e: Throwable) {
+                        result.error(e.javaClass.simpleName, e.message, null)
+                    }
+                }
                 else -> result.notImplemented()
             }
         } catch (ex: PackageManager.NameNotFoundException) {
