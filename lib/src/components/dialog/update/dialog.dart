@@ -279,7 +279,7 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                           onClick: widget.onUpdate,
                         ),
                         secondChild: DxNumberProgress(
-                          height: 12,
+                          height: 14,
                           value: widget.progress,
                           backgroundColor: widget.progressColor.withOpacity(0.3),
                           valueColor: widget.progressColor,
