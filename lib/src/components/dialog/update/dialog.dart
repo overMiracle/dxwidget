@@ -225,9 +225,7 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
     if (!mounted) {
       return;
     }
-    setState(() {
-      widget.progress = progress;
-    });
+    setState(() => widget.progress = progress);
   }
 
   @override
@@ -288,6 +286,7 @@ class _DxUpdateWidgetState extends State<DxUpdateWidget> {
                               onClick: widget.onUpdate,
                             )
                           : DxNumberProgress(
+                              height: 12,
                               value: widget.progress,
                               backgroundColor: widget.progressColor.withOpacity(0.3),
                               valueColor: widget.progressColor,
