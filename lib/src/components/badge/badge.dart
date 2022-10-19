@@ -138,7 +138,6 @@ class DxBadge extends StatelessWidget {
     if (_hasContent || dot) {
       return DefaultTextStyle(
         style: TextStyle(
-          height: 1.2,
           fontSize: themeData!.fontSize,
           fontWeight: themeData!.fontWeight,
           fontFamily: themeData!.fontFamily,
