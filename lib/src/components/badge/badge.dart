@@ -10,9 +10,6 @@ class DxBadge extends StatelessWidget {
   /// 徽标背景颜色
   final Color? color;
 
-  ///是否有边框
-  final bool hasBorder;
-
   /// 是否是圆点
   final bool dot;
 
@@ -40,7 +37,6 @@ class DxBadge extends StatelessWidget {
     this.dot = false,
     this.max,
     this.color,
-    this.hasBorder = false,
     this.offset = const <double>[0.0, 0.0],
     this.showZero = false,
     this.child,
@@ -110,7 +106,7 @@ class DxBadge extends StatelessWidget {
       padding: themeData!.padding,
       decoration: BoxDecoration(
         color: color ?? themeData!.dotColor,
-        border: hasBorder ? Border.all(color: DxStyle.white, width: themeData!.borderWidth) : null,
+        border: Border.all(color: DxStyle.white, width: themeData!.borderWidth),
         borderRadius: BorderRadius.all(Radius.circular(themeData!.dotSize)),
       ),
       child: _buildContent(),
@@ -138,6 +134,7 @@ class DxBadge extends StatelessWidget {
     if (_hasContent || dot) {
       return DefaultTextStyle(
         style: TextStyle(
+          height: 1,
           fontSize: themeData!.fontSize,
           fontWeight: themeData!.fontWeight,
           fontFamily: themeData!.fontFamily,
