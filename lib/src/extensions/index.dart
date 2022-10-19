@@ -1,3 +1,4 @@
 library dxwidget_extensions;
 
-export 'list.dart';
+export 'collection/index.dart';
+export 'match.dart';
