@@ -62,6 +62,7 @@ class DxBadgeThemeData {
     double? borderWidth,
     Color? backgroundColor,
     Color? dotColor,
+    double? dotSize,
     String? fontFamily,
   }) {
     return DxBadgeThemeData.raw(
@@ -73,6 +74,7 @@ class DxBadgeThemeData {
       borderWidth: borderWidth ?? DxStyle.borderWidthBase,
       backgroundColor: backgroundColor ?? DxStyle.red,
       dotColor: dotColor ?? DxStyle.red,
+      dotSize: dotSize ?? 8.0,
       fontFamily: fontFamily ?? '',
     );
   }
@@ -86,6 +88,7 @@ class DxBadgeThemeData {
     required this.borderWidth,
     required this.backgroundColor,
     required this.dotColor,
+    required this.dotSize,
     required this.fontFamily,
   });
 
@@ -98,6 +101,7 @@ class DxBadgeThemeData {
     double? borderWidth,
     Color? backgroundColor,
     Color? dotColor,
+    double? dotSize,
     String? fontFamily,
   }) {
     return DxBadgeThemeData(
@@ -109,6 +113,7 @@ class DxBadgeThemeData {
       borderWidth: borderWidth ?? this.borderWidth,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       dotColor: dotColor ?? this.dotColor,
+      dotSize: dotSize ?? this.dotSize,
       fontFamily: fontFamily ?? this.fontFamily,
     );
   }
@@ -126,6 +131,7 @@ class DxBadgeThemeData {
       borderWidth: other.borderWidth,
       backgroundColor: other.backgroundColor,
       dotColor: other.dotColor,
+      dotSize: other.dotSize,
       fontFamily: other.fontFamily,
     );
   }
@@ -140,6 +146,7 @@ class DxBadgeThemeData {
       borderWidth: lerpDouble(a?.borderWidth, b?.borderWidth, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       dotColor: Color.lerp(a?.dotColor, b?.dotColor, t),
+      dotSize: lerpDouble(a?.dotSize, b?.dotSize, t),
       fontFamily: b?.fontFamily,
     );
   }

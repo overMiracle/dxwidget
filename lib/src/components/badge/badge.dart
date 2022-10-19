@@ -120,7 +120,7 @@ class DxBadge extends StatelessWidget {
   /// 构建内容
   Widget _buildContentBadge() {
     return Container(
-      height: themeData!.dotSize,
+      height: themeData!.size,
       constraints: BoxConstraints(minWidth: themeData!.size),
       alignment: Alignment.center,
       padding: themeData!.padding,
