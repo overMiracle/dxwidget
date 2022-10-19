@@ -2,7 +2,7 @@ import 'package:dxwidget/dxwidget.dart';
 import 'package:dxwidget/src/theme/index.dart';
 import 'package:flutter/material.dart';
 
-typedef OnDxChipListSelected = void Function(DxChipItem item);
+typedef OnDxChipListSelected = void Function(int index, DxChipItem item);
 
 /// Creates a list of [ChoiceChips] with
 /// all logic handled.
@@ -207,7 +207,7 @@ class _DxChipListState extends State<DxChipList> {
         }
         item.isSelected = true;
         setState(() {});
-        widget.onSelected?.call(item);
+        widget.onSelected?.call(index, item);
       },
     );
   }
