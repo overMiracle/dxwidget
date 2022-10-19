@@ -10,7 +10,10 @@ class DxBadge extends StatelessWidget {
   /// 徽标背景颜色
   final Color? color;
 
-  /// 徽标背景颜色
+  ///是否有边框
+  final bool hasBorder;
+
+  /// 是否是圆点
   final bool dot;
 
   /// 最大值，超过最大值会显示 `{max}+`，仅当 content 为数字时有效
@@ -37,8 +40,9 @@ class DxBadge extends StatelessWidget {
     this.dot = false,
     this.max,
     this.color,
+    this.hasBorder = false,
     this.offset = const <double>[0.0, 0.0],
-    this.showZero = true,
+    this.showZero = false,
     this.child,
     this.contentSlot,
     this.themeData,
@@ -92,10 +96,7 @@ class DxBadge extends StatelessWidget {
         text = '$max+';
       }
 
-      return Text(
-        text,
-        textAlign: TextAlign.center,
-      );
+      return Text(text, textAlign: TextAlign.center);
     }
     return null;
   }
@@ -109,13 +110,8 @@ class DxBadge extends StatelessWidget {
       padding: themeData!.padding,
       decoration: BoxDecoration(
         color: color ?? themeData!.dotColor,
-        border: Border.all(
-          color: DxStyle.white,
-          width: themeData!.borderWidth,
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(themeData!.dotSize),
-        ),
+        border: hasBorder ? Border.all(color: DxStyle.white, width: themeData!.borderWidth) : null,
+        borderRadius: BorderRadius.all(Radius.circular(themeData!.dotSize)),
       ),
       child: _buildContent(),
     );
