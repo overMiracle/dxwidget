@@ -44,8 +44,8 @@ extension ObjectExtension<T> on T {
     return !predicate(this) ? this : null;
   }
 
-  T apply(void Function() block) {
-    block();
+  T apply(void Function() fn) {
+    fn();
     return this;
   }
 }
