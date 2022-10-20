@@ -1,50 +1,44 @@
 import 'package:dxwidget/src/theme/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// github地址：https://github.com/weeidl/Custom_Bottom_Sheet
 /// 自定义顶部内容
 class DxCupertinoBottomSheet extends StatefulWidget {
+  final String? title;
   final Color backgroundColor;
   final Color pillColor;
   final Widget child;
 
   const DxCupertinoBottomSheet({
     super.key,
+    this.title,
     this.pillColor = DxStyle.gray4,
     this.backgroundColor = Colors.white,
     required this.child,
   });
 
   static show<T>({
+    String? title,
     required BuildContext context,
     required Widget child,
-    Color? barrierColor,
-    bool barrierDismissible = true,
-    Duration transitionDuration = const Duration(milliseconds: 300),
     Color pillColor = DxStyle.gray4,
     Color backgroundColor = Colors.white,
+    double elevation = 10,
+    BoxConstraints? constraints = const BoxConstraints(minWidth: double.infinity, maxHeight: 320),
   }) {
-    return showGeneralDialog(
+    return showBottomSheet(
       context: context,
-      pageBuilder: (context, animation1, animation2) => child,
-      barrierColor: barrierColor ?? Colors.black.withOpacity(0.5),
-      barrierDismissible: barrierDismissible,
-      barrierLabel: '关闭',
-      transitionDuration: transitionDuration,
-      transitionBuilder: (context, animation1, animation2, widget) {
-        final curvedValue = Curves.easeInOut.transform(animation1.value) - 1.0;
-        return Transform(
-          transform: Matrix4.translationValues(0.0, curvedValue * -300, 0.0),
-          child: Opacity(
-            opacity: animation1.value,
-            child: DxCupertinoBottomSheet(
-              pillColor: pillColor,
-              backgroundColor: backgroundColor,
-              child: child,
-            ),
-          ),
-        );
-      },
+      constraints: constraints,
+      elevation: elevation,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+      ),
+      builder: (_) => DxCupertinoBottomSheet(
+        title: title,
+        pillColor: pillColor,
+        backgroundColor: backgroundColor,
+        child: child,
+      ),
     );
   }
 
@@ -53,116 +47,59 @@ class DxCupertinoBottomSheet extends StatefulWidget {
 }
 
 class _DxCupertinoBottomSheetState extends State<DxCupertinoBottomSheet> {
-  var _initialPosition = 0.0;
-  var _currentPosition = 0.0;
-
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(context).size.width;
-    final deviceHeight = MediaQuery.of(context).size.height;
-
-    return AnimatedPadding(
-      padding: MediaQuery.of(context).viewInsets + EdgeInsets.only(top: deviceHeight / 3.0 + _currentPosition),
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.decelerate,
-      child: MediaQuery.removeViewInsets(
-        removeLeft: true,
-        removeTop: true,
-        removeRight: true,
-        removeBottom: true,
-        context: context,
-        child: Center(
-          child: SizedBox(
-            width: deviceWidth,
-            height: deviceHeight / 1.5,
-            child: Material(
-              color: widget.backgroundColor ?? Theme.of(context).dialogBackgroundColor,
-              elevation: 24.0,
-              type: MaterialType.card,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-              ),
-              child: Column(
-                children: <Widget>[
-                  PillGesture(
-                    pillColor: widget.pillColor,
-                    onVerticalDragStart: _onVerticalDragStart,
-                    onVerticalDragEnd: _onVerticalDragEnd,
-                    onVerticalDragUpdate: _onVerticalDragUpdate,
-                  ),
-                  widget.child,
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return Column(
+      children: <Widget>[
+        widget.title == null
+            ? SizedBox(
+                width: double.infinity,
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(height: 10.0),
+                    Container(
+                      height: 5.0,
+                      width: 25.0,
+                      decoration: BoxDecoration(color: widget.pillColor, borderRadius: BorderRadius.circular(50.0)),
+                    ),
+                    const SizedBox(height: 20.0),
+                  ],
+                ),
+              )
+            : _titleWidget(),
+        widget.child,
+      ],
     );
   }
 
-  void _onVerticalDragStart(DragStartDetails drag) {
-    setState(() => _initialPosition = drag.globalPosition.dy);
-  }
-
-  void _onVerticalDragUpdate(DragUpdateDetails drag) {
-    setState(() {
-      final temp = _currentPosition;
-      _currentPosition = drag.globalPosition.dy - _initialPosition;
-      if (_currentPosition < 0) {
-        _currentPosition = temp;
-      }
-    });
-  }
-
-  void _onVerticalDragEnd(DragEndDetails drag) {
-    if (_currentPosition > 100.0) {
-      Navigator.pop(context);
-      return;
-    }
-    setState(() {
-      _currentPosition = 0.0;
-    });
-  }
-}
-
-class PillGesture extends StatelessWidget {
-  final GestureDragStartCallback onVerticalDragStart;
-  final GestureDragUpdateCallback onVerticalDragUpdate;
-  final GestureDragEndCallback onVerticalDragEnd;
-  final Color? pillColor;
-
-  const PillGesture({
-    super.key,
-    required this.onVerticalDragStart,
-    required this.onVerticalDragUpdate,
-    required this.onVerticalDragEnd,
-    required this.pillColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onVerticalDragStart: onVerticalDragStart,
-      onVerticalDragUpdate: onVerticalDragUpdate,
-      onVerticalDragEnd: onVerticalDragEnd,
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 10.0),
-            Container(
-              height: 5.0,
-              width: 25.0,
-              decoration: BoxDecoration(
-                color: pillColor ?? Colors.blueGrey[200],
-                borderRadius: BorderRadius.circular(50.0),
+  Widget _titleWidget() {
+    // 构建整体标题
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child: Container(
+                padding: const EdgeInsets.only(left: 20),
+                alignment: Alignment.centerLeft,
+                child: const Text('关闭', style: DxStyle.$999999$12, textAlign: TextAlign.left),
+              ),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: Center(
+                child: Text(widget.title!, textAlign: TextAlign.center, maxLines: 1, style: DxStyle.$404040$14$W500),
               ),
             ),
-            const SizedBox(height: 20.0),
+            const Padding(padding: EdgeInsets.only(right: 20), child: Text('  ')),
           ],
         ),
-      ),
+        //有标题则添加分割线
+        const Divider(thickness: 1, height: 0.5, color: DxStyle.$F5F5F5),
+      ],
     );
   }
 }
