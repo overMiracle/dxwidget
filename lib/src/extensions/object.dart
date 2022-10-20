@@ -1,4 +1,4 @@
-extension ObjectE<T extends Object> on T {
+extension ObjectExtension<T> on T {
   /// 'let' can be used to invoke one or more functions on results of call chains.
   /// [it] is the object self.
   /// [fn] is a function with an argument [it] should return a 'value'.
