@@ -52,7 +52,6 @@ export 'src/utils/decoration/corner.dart';
 export 'src/utils/event_bus.dart';
 export 'src/utils/formatter/money.dart';
 export 'src/utils/num/num.dart';
-export 'src/utils/optional.dart';
 export 'src/utils/safe_map.dart';
 export 'src/utils/screen/index.dart';
 export 'src/utils/time_ago.dart';
