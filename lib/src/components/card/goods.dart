@@ -201,7 +201,7 @@ class DxGoodsCard extends StatelessWidget {
               (subTitle != null
                   ? Text(subTitle!, maxLines: 1, overflow: TextOverflow.ellipsis, style: subTitleStyle)
                   : _sizedBoxShrink),
-          const SizedBox(height: DxStyle.intervalMd),
+          const SizedBox(height: 5),
           tagsWidget != null
               ? Padding(padding: const EdgeInsets.only(bottom: DxStyle.intervalMd), child: tagsWidget)
               : _sizedBoxShrink,

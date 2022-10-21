@@ -1,6 +1,7 @@
 library dxwidget;
 
 /// 组件
+export 'src/components/animation/index.dart';
 export 'src/components/badge/index.dart';
 export 'src/components/bar/index.dart';
 export 'src/components/button/index.dart';
