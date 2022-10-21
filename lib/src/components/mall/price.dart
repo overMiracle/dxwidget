@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// 价格组件
 class DxPrice extends StatelessWidget {
   // 价格
-  final double? value;
+  final num? value;
 
   // 价格颜色
   final Color color;
@@ -47,7 +47,9 @@ class DxPrice extends StatelessWidget {
       children: <Widget>[
         Text(currency, style: TextStyle(fontSize: (size / 1.5).toDouble(), color: color)),
         Text(integer, style: TextStyle(fontSize: size, color: color, fontWeight: DxStyle.priceIntegerFontWeight)),
-        Text(".$decimalString", style: TextStyle(fontSize: (size / 1.5).toDouble(), color: color))
+        decimalString == '00'
+            ? const SizedBox.shrink()
+            : Text(".$decimalString", style: TextStyle(fontSize: (size / 1.5).toDouble(), color: color))
       ],
     );
   }
