@@ -662,7 +662,7 @@ class DxStyle {
   static const pickerLoadingMaskColor = Colors.white70;
 
   // Price
-  static const priceFontSize = 18.0;
+  static const priceFontSize = 20.0;
   static const priceTextColor = textColor;
   static const priceTextRedColor = $E02020;
   static const priceIntegerFontWeight = fontWeightBold;
