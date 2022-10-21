@@ -2,6 +2,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// 让一个组件点击时执行旋转，再点击旋转回去。
+/// github地址：https://github.com/toly1994328/toggle_rotate
+///
+/// ToggleRotate(
+///   beginAngle: 0, // 起始角度
+///   endAngle: 45, // 终止角度
+///   clockwise: false, //是否是顺时针
+///   child: Icon(Icons.arrow_upward,size: 60,color: Colors.orangeAccent),
+///   onEnd: (bool isExpanded) { // 动画结束时间
+///       print("---expanded---:$isExpanded-------");
+///     },
+///   onTap: () {}, //点击事件
+/// ),
 class DxToggleRotate extends StatefulWidget {
   final Widget child;
   final ValueChanged<bool>? onEnd;
@@ -77,6 +90,7 @@ class _DxToggleRotateState extends State<DxToggleRotate> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () async {
         widget.onTap?.call();
         if (_rotated) {
@@ -88,7 +102,7 @@ class _DxToggleRotateState extends State<DxToggleRotate> with SingleTickerProvid
         widget.onEnd?.call(_rotated);
       },
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           widget.prefixWidget ?? const SizedBox.shrink(),
           AnimatedBuilder(
@@ -99,7 +113,9 @@ class _DxToggleRotateState extends State<DxToggleRotate> with SingleTickerProvid
               child: widget.child,
             ),
           ),
-          widget.suffixWidget ?? const SizedBox.shrink(),
+          widget.suffixWidget == null
+              ? const SizedBox.shrink()
+              : Padding(padding: const EdgeInsets.only(left: 5), child: widget.suffixWidget),
         ],
       ),
     );
