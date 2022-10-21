@@ -215,7 +215,7 @@ class DxGoodsCard extends StatelessWidget {
                   priceWidget ?? (hasPrice ? DxPrice(value: price, currency: currency) : _sizedBoxShrink),
                   originPriceWidget ??
                       (originPrice != null
-                          ? Text("/$currency${originPrice!.toStringAsFixed(2)}",
+                          ? Text("/$currency${DxTools.removeZero(originPrice!.toStringAsFixed(2))}",
                               style: const TextStyle(
                                   color: DxStyle.cardOriginPriceColor,
                                   fontSize: DxStyle.cardOriginPriceFontSize,
