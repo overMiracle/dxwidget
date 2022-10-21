@@ -11,6 +11,8 @@ class DxToggleRotate extends StatefulWidget {
   final int durationMs;
   final bool clockwise;
   final Curve curve;
+  final Widget? prefixWidget;
+  final Widget? suffixWidget;
 
   const DxToggleRotate({
     Key? key,
@@ -22,6 +24,8 @@ class DxToggleRotate extends StatefulWidget {
     this.clockwise = true,
     this.durationMs = 200,
     this.curve = Curves.fastOutSlowIn,
+    this.prefixWidget,
+    this.suffixWidget,
   }) : super(key: key);
 
   @override
@@ -83,13 +87,19 @@ class _DxToggleRotateState extends State<DxToggleRotate> with SingleTickerProvid
         _rotated = !_rotated;
         widget.onEnd?.call(_rotated);
       },
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (_, __) => Transform(
-          transform: Matrix4.rotationZ(rad),
-          alignment: Alignment.center,
-          child: widget.child,
-        ),
+      child: Row(
+        children: [
+          widget.prefixWidget ?? const SizedBox.shrink(),
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (_, __) => Transform(
+              transform: Matrix4.rotationZ(rad),
+              alignment: Alignment.center,
+              child: widget.child,
+            ),
+          ),
+          widget.suffixWidget ?? const SizedBox.shrink(),
+        ],
       ),
     );
   }
