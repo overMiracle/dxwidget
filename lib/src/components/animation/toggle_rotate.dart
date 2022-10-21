@@ -88,6 +88,7 @@ class _DxToggleRotateState extends State<DxToggleRotate> with SingleTickerProvid
         widget.onEnd?.call(_rotated);
       },
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           widget.prefixWidget ?? const SizedBox.shrink(),
           AnimatedBuilder(

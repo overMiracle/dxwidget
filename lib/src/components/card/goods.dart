@@ -165,9 +165,7 @@ class DxGoodsCard extends StatelessWidget {
               _buildRightContent(),
             ],
           ),
-          footerWidget != null
-              ? Padding(padding: const EdgeInsets.only(top: 10.0), child: footerWidget)
-              : _sizedBoxShrink,
+          footerWidget ?? _sizedBoxShrink,
         ],
       ),
     );
@@ -201,7 +199,7 @@ class DxGoodsCard extends StatelessWidget {
               (subTitle != null
                   ? Text(subTitle!, maxLines: 1, overflow: TextOverflow.ellipsis, style: subTitleStyle)
                   : _sizedBoxShrink),
-          const SizedBox(height: 5),
+          const SizedBox(height: DxStyle.intervalMd),
           tagsWidget != null
               ? Padding(padding: const EdgeInsets.only(bottom: DxStyle.intervalMd), child: tagsWidget)
               : _sizedBoxShrink,
@@ -235,7 +233,9 @@ class DxGoodsCard extends StatelessWidget {
                       : _sizedBoxShrink),
             ],
           ),
-          extraWidget ?? _sizedBoxShrink,
+          extraWidget != null
+              ? Padding(padding: const EdgeInsets.only(top: DxStyle.intervalMd), child: extraWidget)
+              : _sizedBoxShrink,
         ],
       ),
     );
