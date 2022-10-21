@@ -213,10 +213,9 @@ class DxGoodsCard extends StatelessWidget {
                 textBaseline: TextBaseline.ideographic,
                 children: <Widget>[
                   priceWidget ?? (hasPrice ? DxPrice(value: price, currency: currency) : _sizedBoxShrink),
-                  SizedBox(width: hasPrice ? DxStyle.intervalMd : 0),
                   originPriceWidget ??
                       (originPrice != null
-                          ? Text("$currency${originPrice!.toStringAsFixed(2)}",
+                          ? Text("/$currency${originPrice!.toStringAsFixed(2)}",
                               style: const TextStyle(
                                   color: DxStyle.cardOriginPriceColor,
                                   fontSize: DxStyle.cardOriginPriceFontSize,
