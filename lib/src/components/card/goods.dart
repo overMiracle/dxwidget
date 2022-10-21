@@ -63,6 +63,9 @@ class DxGoodsCard extends StatelessWidget {
   /// 自定义价格
   final Widget? priceWidget;
 
+  /// 扩展组件
+  final Widget? extraWidget;
+
   /// 自定义商品原价
   final Widget? originPriceWidget;
 
@@ -113,6 +116,7 @@ class DxGoodsCard extends StatelessWidget {
     this.priceWidget,
     this.originPriceWidget,
     this.numWidget,
+    this.extraWidget,
     this.footerWidget,
     this.slidablePadding = 0,
     this.slidableActionList,
@@ -228,7 +232,8 @@ class DxGoodsCard extends StatelessWidget {
                           "x$num",
                           style: const TextStyle(fontSize: DxStyle.cardFontSize, color: DxStyle.cardNumColor),
                         )
-                      : _sizedBoxShrink)
+                      : _sizedBoxShrink),
+              extraWidget ?? _sizedBoxShrink,
             ],
           )
         ],
