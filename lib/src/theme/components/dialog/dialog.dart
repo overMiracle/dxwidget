@@ -88,12 +88,12 @@ class DxDialogThemeData {
     final double $fontSize = fontSize ?? DxStyle.fontSizeLg;
     final double $messageFontSize = messageFontSize ?? DxStyle.fontSizeMd;
     return DxDialogThemeData.raw(
-      width: width ?? 320.0,
+      width: width ?? 280.0,
       smallScreenWidthFactor: smallScreenWidthFactor ?? .9,
       fontSize: $fontSize,
-      transition: transition ?? DxStyle.animationDurationBase,
+      transition: transition ?? DxStyle.animationDuration200,
       borderRadius: borderRadius ?? 12.0,
-      backgroundColor: backgroundColor ?? DxStyle.white,
+      backgroundColor: backgroundColor ?? DxStyle.gray4,
       headerFontWeight: headerFontWeight ?? DxStyle.fontWeightBold,
       headerLineHeight: headerLineHeight ?? (24.0 / $fontSize),
       headerPaddingTop: headerPaddingTop ?? 15.0,

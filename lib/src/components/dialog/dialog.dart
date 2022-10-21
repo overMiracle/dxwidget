@@ -1,5 +1,7 @@
 import 'package:dxwidget/dxwidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum DxDialogThemeType { normal, roundButton }
 
@@ -327,6 +329,138 @@ class DxDialog {
     );
   }
 
+  static Future<DxDialogAction?> textInput(
+    BuildContext context, {
+
+    /// 控制器
+    required TextEditingController controller,
+    List<TextInputFormatter>? inputFormatters,
+
+    /// 标题
+    String? title,
+
+    /// 副标题
+    String? subTitle,
+
+    /// 弹窗宽度
+    double? width,
+
+    /// 文本内容，支持通过 `\n` 换行
+    String? content,
+
+    /// 内容水平对齐方式，可选值为 `left` `right` `center`
+    TextAlign? contentAlign,
+
+    /// 式风格，可选值为 `roundButton` `normal`
+    DxDialogThemeType? theme,
+
+    /// 是否展示确认按钮
+    bool? showConfirmButton,
+
+    /// 是否展示取消按钮
+    bool? showCancelButton,
+
+    /// 确认按钮文案
+    String? confirmButtonText,
+
+    /// 确认按钮颜色
+    Color? confirmButtonColor,
+
+    /// 取消按钮文案
+    String? cancelButtonText,
+
+    /// 取消按钮颜色
+    Color? cancelButtonColor,
+
+    /// 自定义遮罩层样式
+    Color? overlayColor,
+
+    /// 是否在点击遮罩层后关闭
+    bool? closeOnClickOverlay,
+
+    /// 关闭前判断, `return false` 不关闭
+    DxDialogBeforeClose? beforeClose,
+
+    /// 动画
+    DxTransitionBuilder? transitionBuilder,
+
+    /// 点击确认按钮时触发
+    VoidCallback? onConfirm,
+
+    /// 点击取消按钮时触发
+    VoidCallback? onCancel,
+
+    /// 打开面板时触发
+    VoidCallback? onOpen,
+
+    /// 关闭面板时触发
+    VoidCallback? onClose,
+
+    /// 打开面板且动画结束后触发
+    VoidCallback? onOpened,
+
+    /// 关闭面板且动画结束后触发
+    VoidCallback? onClosed,
+
+    /// 自定义内容
+    WidgetBuilder? builder,
+
+    /// 自定义标题
+    WidgetBuilder? titleBuilder,
+
+    /// 自定义底部按钮区域
+    WidgetBuilder? footerBuilder,
+  }) async {
+    return alert(
+      context,
+      title: title,
+      width: width,
+      contentAlign: contentAlign,
+      theme: theme,
+      showConfirmButton: showConfirmButton,
+      showCancelButton: showCancelButton ?? true,
+      confirmButtonText: confirmButtonText,
+      confirmButtonColor: confirmButtonColor,
+      cancelButtonText: cancelButtonText,
+      cancelButtonColor: cancelButtonColor,
+      overlayColor: overlayColor,
+      closeOnClickOverlay: closeOnClickOverlay,
+      beforeClose: beforeClose,
+      transitionBuilder: transitionBuilder,
+      onConfirm: onConfirm,
+      onCancel: onCancel,
+      onOpen: onOpen,
+      onClose: onClose,
+      onOpened: onOpened,
+      onClosed: onClosed,
+      builder: (_) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            subTitle == null ? const SizedBox.shrink() : Text(subTitle, style: DxStyle.$999999$12),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+              child: CupertinoTextField(
+                controller: controller,
+                autofocus: true,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                style: DxStyle.$404040$15,
+                cursorHeight: 20,
+                placeholder: '请输入商品价格',
+                placeholderStyle: DxStyle.$CCCCCC$14,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                inputFormatters: inputFormatters,
+              ),
+            ),
+          ],
+        );
+      },
+      titleBuilder: titleBuilder,
+      footerBuilder: footerBuilder,
+    );
+  }
+
   static bool isInstanceShow = false;
 
   static void close(BuildContext context) {
@@ -516,7 +650,7 @@ class _DxDialogWidgetState extends State<DxDialogWidget> {
     return Container(
       height: themeData.buttonHeight,
       decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: DxStyle.gray3, width: 0.5)),
+        border: Border(top: BorderSide(color: DxStyle.gray5, width: 0.5)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -531,8 +665,9 @@ class _DxDialogWidgetState extends State<DxDialogWidget> {
                     type: DxButtonType.normal,
                     hasBorder: false,
                     height: 56,
+                    color: DxStyle.gray4,
                     title: widget.cancelButtonText.isNotEmpty ? widget.cancelButtonText : '取消',
-                    titleColor: widget.cancelButtonColor,
+                    titleColor: widget.cancelButtonColor ?? DxStyle.gray6,
                     loading: loading,
                     onClick: _onCancel,
                   );
@@ -542,7 +677,7 @@ class _DxDialogWidgetState extends State<DxDialogWidget> {
           ),
           Visibility(
             visible: widget.showCancelButton,
-            child: const VerticalDivider(width: 1.0, color: DxStyle.borderColor),
+            child: const VerticalDivider(width: 1.0, color: DxStyle.gray5),
           ),
           Visibility(
             visible: widget.showConfirmButton,
@@ -554,6 +689,7 @@ class _DxDialogWidgetState extends State<DxDialogWidget> {
                     type: DxButtonType.normal,
                     hasBorder: false,
                     height: 56,
+                    color: DxStyle.gray4,
                     title: widget.confirmButtonText.isNotEmpty ? widget.confirmButtonText : '确定',
                     titleColor: widget.confirmButtonColor ?? themeData.confirmButtonTextColor,
                     loading: loading,
