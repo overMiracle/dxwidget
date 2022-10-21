@@ -233,9 +233,9 @@ class DxGoodsCard extends StatelessWidget {
                           style: const TextStyle(fontSize: DxStyle.cardFontSize, color: DxStyle.cardNumColor),
                         )
                       : _sizedBoxShrink),
-              extraWidget ?? _sizedBoxShrink,
             ],
-          )
+          ),
+          extraWidget ?? _sizedBoxShrink,
         ],
       ),
     );
