@@ -9,16 +9,26 @@ const int inMaxValue = 9007199254740991;
 /// 数字精确计算
 /// github地址：https://github.com/luoyelusheng/number_precision
 /// 例子：
-/// DxNP.strip(0.09999999999999998); // = 0.1
-/// DxNP.plus(0.1, 0.2);             // = 0.3, not 0.30000000000000004
-/// DxNP.plus(2.3, 2.4);             // = 4.7, not 4.699999999999999
-/// DxNP.minus(1.0, 0.9);            // = 0.1, not 0.09999999999999998
-/// DxNP.times(3, 0.3);              // = 0.9, not 0.8999999999999999
-/// DxNP.times(0.362, 100);          // = 36.2, not 36.199999999999996
-/// DxNP.divide(1.21, 1.1);          // = 1.1, not 1.0999999999999999
-/// DxNP.round(0.105, 2);            // = 0.11, not 0.1
-class DxNP {
+/// DxNumUtil.strip(0.09999999999999998); // = 0.1
+/// DxNumUtil.plus(0.1, 0.2);             // = 0.3, not 0.30000000000000004
+/// DxNumUtil.plus(2.3, 2.4);             // = 4.7, not 4.699999999999999
+/// DxNumUtil.minus(1.0, 0.9);            // = 0.1, not 0.09999999999999998
+/// DxNumUtil.times(3, 0.3);              // = 0.9, not 0.8999999999999999
+/// DxNumUtil.times(0.362, 100);          // = 36.2, not 36.199999999999996
+/// DxNumUtil.divide(1.21, 1.1);          // = 1.1, not 1.0999999999999999
+/// DxNumUtil.round(0.105, 2);            // = 0.11, not 0.1
+class DxNumUtil {
+  DxNumUtil._();
+
   static bool _boundaryCheckingState = true;
+
+  /// 字符串格式的数字去0
+  static String trim0(dynamic num) {
+    if (num == null) return '0';
+    RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
+    String numStr = num.toString().replaceAll(regex, '');
+    return numStr != '' ? numStr : '0';
+  }
 
   /// 字符串转为[num]类型
   /// [number] 数据
@@ -93,7 +103,7 @@ class DxNP {
 
     checkBoundary(leftValue);
 
-    return DxNP.strip(leftValue / pow(10, baseNum));
+    return DxNumUtil.strip(leftValue / pow(10, baseNum));
   }
 
   /// 精确加法
