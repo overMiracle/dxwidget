@@ -395,7 +395,7 @@ class DxStyle {
   static const cardDescColor = gray7;
   static const cardOriginPriceColor = gray6;
   static const cardNumColor = gray6;
-  static const cardOriginPriceFontSize = fontSizeSm;
+  static const cardOriginPriceFontSize = fontSize11;
 
   // Cell
   static const cellFontSize = fontSizeMd;
