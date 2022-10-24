@@ -22,6 +22,11 @@ class DxNumUtil {
 
   static bool _boundaryCheckingState = true;
 
+  /// 数值是否是0
+  static bool isZero(num? value) {
+    return value == null || value == 0;
+  }
+
   /// 字符串格式的数字去0
   static String trim0(dynamic num) {
     if (num == null) return '0';
